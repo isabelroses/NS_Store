@@ -1,0 +1,24 @@
+{% extends "layouts/base.tera" %}
+
+{% block title %}Nix Store{% endblock %}
+
+{% block content %}
+
+  <main class="flex flex-col m-20">
+
+    <h1 class="text-3xl font-bold mb-8">Nix Store</h1>
+
+    {% include "partials/nixstore.tera" %}
+
+    <div class="justify-center flex flex-row gap-2 py-2">
+      {% if current_page > 0 %}
+        <a href="?page={{ current_page - 1 }}">←</a>
+      {% endif %}
+
+      <span>{{ current_page }}</span>
+
+      <a href="?page={{ current_page + 1 }}">→</a>
+    </div>
+  </main>
+
+{% endblock %}

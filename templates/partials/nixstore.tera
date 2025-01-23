@@ -1,0 +1,5 @@
+<div class="flex flex-col gap-2">
+  {% for path in paths %}
+    {% include "partials/storeitem.tera" %}
+  {% endfor %}
+</div>

@@ -1,0 +1,82 @@
+{% extends "layouts/base.tera" %}
+
+{% block title %}
+
+  {% if item.error %}
+
+    {{ item.error }}
+
+  {% else %}
+
+    {{ item.path | name_from_store_path }}
+
+  {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+  <main class="flex flex-col m-20">
+
+    {% if item.error %}
+
+      <h1 class="text-3xl font-bold mb-8">{{ item.error }}</h1>
+
+    {% else %}
+
+      <h1 class="text-3xl font-bold mb-8">{{ item.path | name_from_store_path }}</h1>
+
+      <div class="p-4 bg-gray-200 rounded-md">
+
+        <p><span class="font-bold">size</span>: {{ item.narSize | human_readable_size }}</p>
+
+        <p><span class="font-bold">path</span>: {{ item.path }}</p>
+
+        <p><span class="font-bold">registered at</span>: {{ item.registrationTime | date(format="%H:%M %d/%m/%Y") }}</p>
+
+        {% if item.cachedIn %}
+          <ul>
+
+            {% for cache in item.cachedIn %}
+
+              <li><span class="font-bold">cached in</span>: {{ cache }}</li >
+
+            {% endfor %}
+
+          </ul>
+
+        {% endif %}
+
+      </div>
+
+      {% if item.deriver %}
+
+        <h2 class="text-2xl py-4" >Deriver</h2>
+
+        <div>
+
+          {% set path = item.deriver %}
+          {% include "partials/storeitem.tera" %}
+
+        </div>
+
+      {% endif %}
+
+      {% if item.references %}
+
+        <h2 class="text-2xl py-4" >References</h2>
+
+        <div>
+
+          {% set paths = item.references %}
+          {% include "partials/nixstore.tera" %}
+
+        </div>
+
+      {% endif %}
+
+    {% endif %}
+
+  </main>
+
+{% endblock %}
