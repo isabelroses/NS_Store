@@ -1,4 +1,8 @@
-{ lib, rustPlatform }:
+{
+  lib,
+  rustPlatform,
+  tailwindcss,
+}:
 let
   toml = (lib.importTOML ./Cargo.toml).package;
 in
@@ -13,9 +17,20 @@ rustPlatform.buildRustPackage {
         ./Cargo.toml
         ./Cargo.lock
         ./src
+        ./templates
+        ./static
+        ./styles
       ]
     );
   };
+
+  nativeBuildInputs = [ tailwindcss ];
+
+  preBuild = ''
+    pushd styles
+    tailwindcss -i ./base.css -o ../styles.css
+    popd
+  '';
 
   cargoLock.lockFile = ./Cargo.lock;
 

@@ -5,7 +5,6 @@
   clippy,
   rustfmt,
   rust-analyzer,
-  tailwindcss,
 }:
 let
   mainPkg = callPackage ./default.nix { };
@@ -17,6 +16,5 @@ mkShell {
     clippy
     rustfmt
     rust-analyzer
-    tailwindcss
   ];
 }
